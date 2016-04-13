@@ -10,32 +10,49 @@ $(document).ready(function(){
   $('#SubmitBtn').click(function (event) {
     console.log("after submit button click");
     console.log($("input[name='score']").val());
-    $.ajax({
-    url: 'http://healthcarenode.mybluemix.net/search1',
-    data: { key : $("input[name='score']").val() },
-  //  dataType: "json",
 
-    success: function(data) {
-      console.log(data);
-      console.log(data.length);
-      var data1 = JSON.parse(data);
-      for (var i=0; i<data1.length; i++) {
-  //      $("#test").append("<tr><td>Number " + i + " is:</td>");
-        $("#test").append("<tr><td>" + data1[i] + "</td></tr>");
-      }
-    //    $("#test").append(data);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        alert('Error connecting to the Node.js server... ' + textStatus + " " + errorThrown);
-    }
+    $.get('/search1', {key : $("input[name='score']").val()}, function (data) {
+        console.log(data);
+        console.log(data);
+        console.log(data.length);
+        var data1 = JSON.parse(data);
+        $('#test').empty();
+        for (var i=0; i<data1.length; i++) {
+    //      $("#test").append("<tr><td>Number " + i + " is:</td>");
+          $("#test").append("<tr><td>" + data1[i] + "</td></tr>");
+        }
+      //    $("#test").append(data);
+    });
   });
 });
+  //    });
+  //  $.ajax({
+  //  url: 'http://healthcarenode.mybluemix.net/search1',
+//    data: { key : $("input[name='score']").val() },
+//  //  dataType: "json",
+//
+  //  success: function(data) {
+  //    console.log(data);
+  //    console.log(data.length);
+  //    var data1 = JSON.parse(data);
+  //    for (var i=0; i<data1.length; i++) {
+  ////      $("#test").append("<tr><td>Number " + i + " is:</td>");
+  //      $('#test').empty();
+  //      $("#test").append("<tr><td>" + data1[i] + "</td></tr>");
+  //    }
+  //  //    $("#test").append(data);
+  //  },
+  //  error: function(jqXHR, textStatus, errorThrown) {
+  //      alert('Error connecting to the Node.js server... ' + textStatus + " " + errorThrown);
+//    }
+//  });
+//});
 //    $('input.typeahead').typeahead({
 //        name: 'countries',
 //        remote: 'http://healthcarenode.mybluemix.net/search1?key=%QUERY',
 //        limit: 10
 //    });
-});
+//});
 </script>
 <style type="text/css">
 .bs-example{
@@ -90,7 +107,7 @@ $(document).ready(function(){
 </head>
 <body>
    <div class="page-header">
-        <h1>Health Care <small>Singapore</small></h1>
+        <h1>Find a Place <small>Singapore</small></h1>
     </div>
 
 
