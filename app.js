@@ -65,7 +65,7 @@ app.get('/search1',function(req,res){
           console.log("swapnil");
           console.log("Error", err);
       } else {
-          var query = "SELECT COL1 from TEST where COL2='"+req.query.key+"'";
+          var query = "SELECT COMMON_ROOM, MASTER_ROOM, HDB_2_ROOM from AVERAGE_RENT where LOCATION='"+req.query.key+"'";
           console.log("okkkkk");
           console.log(req.query.key);
           conn.query(query, function(err, rows) {
@@ -77,7 +77,8 @@ app.get('/search1',function(req,res){
               {
                 data.push(rows[i].COL1);
               }
-              res.end(JSON.stringify(data));
+          //    res.end(JSON.stringify(data));
+            res.end(JSON.stringify(rows));
           });
       }
   });

@@ -9,19 +9,20 @@
 $(document).ready(function(){
   $('#SubmitBtn').click(function (event) {
     console.log("after submit button click");
-    console.log($("input[name='score']").val());
+    console.log($("input[name='area']").val());
 
-    $.get('/search1', {key : $("input[name='score']").val()}, function (data) {
-        console.log(data);
+    $.get('/search1', {key : $("input[name='area']").val()}, function (data) {
         console.log(data);
         console.log(data.length);
         var data1 = JSON.parse(data);
         $('#test').empty();
+        $("#test").append("<tr><th>Accomodation Type</th><th>"+"Rent"+"</th></tr>");
+    //    $("#test").append("<th>Rent</th></tr>");
         for (var i=0; i<data1.length; i++) {
-    //      $("#test").append("<tr><td>Number " + i + " is:</td>");
-          $("#test").append("<tr><td>" + data1[i] + "</td></tr>");
+          $("#test").append("<tr><td>Common Room</td><td>" + data1[i].COMMON_ROOM + "</td></tr>");
+          $("#test").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
+          $("#test").append("<tr><td>2 Room HBD</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
         }
-      //    $("#test").append(data);
     });
   });
 });
@@ -55,6 +56,9 @@ $(document).ready(function(){
 //});
 </script>
 <style type="text/css">
+table, th, td {
+    border: 1px solid black;
+}
 .bs-example{
 	font-family: sans-serif;
 	position: relative;
@@ -107,12 +111,15 @@ $(document).ready(function(){
 </head>
 <body>
    <div class="page-header">
-        <h1>Find a Place <small>Singapore</small></h1>
+        <h1>Find a Place in <small> Singapore</small></h1>
     </div>
 
 
     <h3>Enter the search term</h3>
-    <input type="text" name="score">
+    <input type="text" name="area">
+  <!--  <input type="text" name="a"> -->
+
+    <br>
     <button id="SubmitBtn" type="submit">Submit</button>
     <table>
         <div id="test"></div>
