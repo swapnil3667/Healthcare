@@ -83,3 +83,30 @@ app.get('/search1',function(req,res){
       }
   });
 });
+
+app.get('/prioritise',function(req,res){
+  console.log("comeon");
+  ibmdb.open(dbConnString, function(err, conn) {
+      if (err) {
+          console.log("swapnil");
+          console.log("Error", err);
+      } else {
+          var query = "select area,school_count from schools_score order by school_count desc"
+        //  var query = "SELECT COMMON_ROOM, MASTER_ROOM, HDB_2_ROOM from AVERAGE_RENT where LOCATION='"+req.query.key+"'";
+          console.log("okkkkk");
+          console.log(req.query.key);
+          conn.query(query, function(err, rows) {
+            if (err) throw err;
+            var data=[];
+            console.log("Entering Here");
+            console.log(rows);
+            for(i=0;i<rows.length;i++)
+              {
+                data.push(rows[i].COL1);
+              }
+          //    res.end(JSON.stringify(data));
+            res.end(JSON.stringify(rows));
+          });
+      }
+  });
+});

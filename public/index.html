@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Example of Twitter Typeahead</title>
+<title>Rent Search</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script  type="text/javascript" src="typeahead.min.js"></script>
 <script type="text/javascript">
@@ -88,6 +88,24 @@ $(document).ready(function(){
           $("#test").append("<tr><td>Common Room</td><td>" + data1[i].COMMON_ROOM + "</td></tr>");
           $("#test").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
           $("#test").append("<tr><td>2 Room HBD</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
+        }
+    });
+  });
+  $('#Prioritise_by_school').click(function (event) {
+    console.log("after submit button click");
+    console.log($("input[name='area']").val());
+
+    $.get('/prioritise', function (data) {
+        console.log(data);
+        console.log(data.length);
+        var data1 = JSON.parse(data);
+        $('#prioritise_result').empty();
+        $("#prioritise_result").append("<tr><th>Area</th><th>"+"School Count"+"</th></tr>");
+    //    $("#test").append("<th>Rent</th></tr>");
+        for (var i=0; i<data1.length; i++) {
+          $("#prioritise_result").append("<tr><td>"+data1[i].AREA+"</td><td>" + data1[i].SCHOOL_COUNT + "</td></tr>");
+      //    $("#test").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
+      //    $("#test").append("<tr><td>2 Room HBD</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
         }
     });
   });
@@ -285,7 +303,11 @@ div.tabContent.hide { display: none; }
   </div>
 
   <div class="tabContent" id="analysis">
-    <p>work to be done here</p>
+    <p>Prioritizing by Need</p>
+    <button id="Prioritise_by_school" type="submit">Schools</button>
+    <table>
+        <div id="prioritise_result"></div>
+    </table>
   </div>
   <!--  <div class="bs-example">
         <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="Type your Query">
