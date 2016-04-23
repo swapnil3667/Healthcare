@@ -85,31 +85,179 @@ $(document).ready(function(){
         $("#test").append("<tr><th>Accomodation Type</th><th>"+"Rent"+"</th></tr>");
     //    $("#test").append("<th>Rent</th></tr>");
         for (var i=0; i<data1.length; i++) {
+          if (data1[i].COMMON_ROOM) {
           $("#test").append("<tr><td>Common Room</td><td>" + data1[i].COMMON_ROOM + "</td></tr>");
+          }
+          if (data1[i].MASTER_ROOM) {
           $("#test").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
-          $("#test").append("<tr><td>2 Room HBD</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_2_ROOM) {
+          $("#test").append("<tr><td>2 Room HDB</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_3_ROOM) {
+          $("#test").append("<tr><td>3 Room HDB</td><td>" + data1[i].HDB_3_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_4_ROOM) {
+          $("#test").append("<tr><td>4 Room HDB</td><td>" + data1[i].HDB_4_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_5_ROOM) {
+          $("#test").append("<tr><td>5 Room HDB</td><td>" + data1[i].HDB_5_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_EA) {
+          $("#test").append("<tr><td>HDB EA</td><td>" + data1[i].HDB_EA + "</td></tr>");
+          }
+          if (data1[i].HDB_MAISONETT) {
+          $("#test").append("<tr><td>HDB Maisonett</td><td>" + data1[i].HDB_MAISONETT + "</td></tr>");
+          }
         }
     });
   });
+
+  $('#SubmitEthinicity').click(function (event) {
+      $.get('/ethnicity_analysis', {key : $("input[name='ethinic_location']").val()}, function (data) {
+          console.log(data);
+          console.log(data.length);
+          var data1 = JSON.parse(data);
+          $('#ethnicity_analysis').empty();
+          $('#ethnicity_analysis').append("<iframe width=\"900\" height=\"800\" frameborder=\"0\" scrolling=\"no\" src=\""+ data1.url +".embed \"></iframe>");
+      });
+  });
+
+  $('#SubmitRentForecast').click(function (event) {
+      $.get('/rentforecast', {key1 : $("input[name='forecast_location']").val(), key2:  $("input[name='roomtype']").val() },function (data) {
+          console.log(data);
+          console.log(data.length);
+      //    var data1 = JSON.parse(data);
+          $('#rent_forecast').empty();
+          $('#rent_forecast').append(data);
+      });
+  });
+//$('#table').on('click','SubmitBtnfly', function()
+//$('#registered_participants').on('click', '.new_participant_form',
+  $('#nearbytextbox').on('click','#SubmitBtnfly',function () {
+    console.log("after submit button click");
+    console.log($("input[name='resultarea']").val());
+
+    $.get('/search1', {key : $("input[name='resultarea']").val()}, function (data) {
+        console.log(data);
+        console.log(data.length);
+        var data1 = JSON.parse(data);
+        $('#testfly').empty();
+        $("#testfly").append("<tr><th>Accomodation Type</th><th>"+"Rent"+"</th></tr>");
+    //    $("#test").append("<th>Rent</th></tr>");
+        for (var i=0; i<data1.length; i++) {
+          if (data1[i].COMMON_ROOM) {
+          $("#testfly").append("<tr><td>Common Room</td><td>" + data1[i].COMMON_ROOM + "</td></tr>");
+          }
+          if (data1[i].MASTER_ROOM) {
+          $("#testfly").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_2_ROOM) {
+          $("#testfly").append("<tr><td>2 Room HDB</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_3_ROOM) {
+          $("#testfly").append("<tr><td>3 Room HDB</td><td>" + data1[i].HDB_3_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_4_ROOM) {
+          $("#testfly").append("<tr><td>4 Room HDB</td><td>" + data1[i].HDB_4_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_5_ROOM) {
+          $("#testfly").append("<tr><td>5 Room HDB</td><td>" + data1[i].HDB_5_ROOM + "</td></tr>");
+          }
+          if (data1[i].HDB_EA) {
+          $("#testfly").append("<tr><td>HDB EA</td><td>" + data1[i].HDB_EA + "</td></tr>");
+          }
+          if (data1[i].HDB_MAISONETT) {
+          $("#testfly").append("<tr><td>HDB Maisonett</td><td>" + data1[i].HDB_MAISONETT + "</td></tr>");
+          }
+        }
+    });
+  });
+
   $('#Prioritise_by_school').click(function (event) {
     console.log("after submit button click");
     console.log($("input[name='area']").val());
 
-    $.get('/prioritise', function (data) {
+    $.get('/prioritise_school', function (data) {
         console.log(data);
         console.log(data.length);
         var data1 = JSON.parse(data);
         $('#prioritise_result').empty();
-        $("#prioritise_result").append("<tr><th>Area</th><th>"+"School Count"+"</th></tr>");
-    //    $("#test").append("<th>Rent</th></tr>");
+        $("#prioritise_result").append("<tr><th>Location</th><th>"+"School Count" +"</th></tr>");
         for (var i=0; i<data1.length; i++) {
-          $("#prioritise_result").append("<tr><td>"+data1[i].AREA+"</td><td>" + data1[i].SCHOOL_COUNT + "</td></tr>");
-      //    $("#test").append("<tr><td>Master Room </td><td>" + data1[i].MASTER_ROOM + "</td></tr>");
-      //    $("#test").append("<tr><td>2 Room HBD</td><td>" + data1[i].HDB_2_ROOM + "</td></tr>");
+          $("#prioritise_result").append("<tr><td>"+data1[i].AREA+"</td><td>" + data1[i].COUNT + "</td></tr>");
+        }
+    });
+    $("#prioritise_result1").empty();
+    $("#prioritise_result1").append("<iframe width=\"600\" height=\"300\" frameborder=\"0\" margin=\"auto\" scrolling=\"no\" src=\"https://plot.ly/~KrishnanV/5.embed \"></iframe>");
+  });
+
+
+
+
+  $('#Prioritise_by_hospital').click(function (event) {
+    console.log("after submit button click");
+    console.log($("input[name='area']").val());
+
+    $.get('/prioritise_hospital', function (data) {
+        console.log(data);
+        console.log(data.length);
+        var data1 = JSON.parse(data);
+        $("#prioritise_result1").empty();
+        $('#prioritise_result').empty();
+        $('#prioritise_result').empty();
+        $("#prioritise_result").append("<tr><th>Location</th><th>"+"Hospital Count"+"</th></tr>");
+        for (var i=0; i<data1.length; i++) {
+          $("#prioritise_result").append("<tr><td>"+data1[i].LOCATION+"</td><td>" + data1[i].COUNT + "</td></tr>");
         }
     });
   });
-});
+
+  $('#Prioritise_by_school_and_hospital').click(function (event) {
+    console.log("after submit button click");
+    console.log($("input[name='area']").val());
+
+    $.get('/prioritise_school_and_hospital', function (data) {
+        console.log(data);
+        console.log(data.length);
+        var data1 = JSON.parse(data);
+        $("#prioritise_result1").empty();
+        $('#prioritise_result').empty();
+        $('#prioritise_result').empty();
+        $("#prioritise_result").append("<tr><th>Location</th></tr>");
+        for (var i=0; i<data1.length; i++) {
+          $("#prioritise_result").append("<tr><td>"+data1[i].LOCATION+"</td></tr>");
+        }
+    });
+  });
+
+  $('#SubmitNearbyBtn').click(function (event) {
+    console.log("after submit button click");
+    console.log($("input[name='nearbyarea']").val());
+
+    $.get('/nearbylocation', {key : $("input[name='nearbyarea']").val()}, function (data) {
+        console.log(data);
+        console.log(data.length);
+    //    var data1 = JSON.parse(data);
+    //    console.log(data1);
+        console.log();
+        $("#nearbytextbox").empty();
+        $("#nearbytextbox").append(data);
+  //      $("#nearbytextbox").append("<input list=\"resultlist\" type=\"text\" name=\"resultarea\">");
+  //      $("#nearbytextbox").append("<datalist id=\"resultlist\">");
+  //      for (var i=0; i<data1.length; i++) {
+  //        console.log(data1[i].LOCATION);
+  //        $("#nearbytextbox").append("<option value=\"" + data1[i].LOCATION + "\"/>");
+  //      }
+  //      $("#nearbytextbox").append("</datalist>");
+  //      $("#nearbytextbox").append("<br>");
+  //      $("#nearbytextbox").append("<button id=\"SubmitBtnfly\" type=\"submit\">Submit</button>");
+  //      $("#nearbytextbox").append("<table>");
+  //      $("#nearbytextbox").append("<div id=\"testfly\"></div>");
+  //      $("#nearbytextbox").append("</table>");
+    });
+  });
+  });
 </script>
 <style type="text/css">
 table, th, td {
@@ -171,6 +319,13 @@ div.tabContent.hide { display: none; }
 .tt-suggestion p {
 	margin: 0;
 }
+.parent_div_1{
+    margin-right:10px;
+}
+.child_div_1{
+    float:left;
+    margin-right:5px;
+}
 </style>
 </head>
 <body onload="init()">
@@ -181,7 +336,10 @@ div.tabContent.hide { display: none; }
 
   <ul id="tabs">
     <li><a href="#averagerent">Average Rent</a></li>
-    <li><a href="#analysis">Rent Analysis</a></li>
+    <li><a href="#analysis">Area Ranking</a></li>
+    <li><a href="#NearbyLocality">Nearby Locality</a></li>
+    <li><a href="#locationethinicity">Location Ethinicity</a></li>
+    <li><a href="#rentforecast">Rent Forecast</a></li>
   </ul>
 
  <div class="tabContent" id="averagerent">
@@ -302,15 +460,220 @@ div.tabContent.hide { display: none; }
     </table>
   </div>
 
-  <div class="tabContent" id="analysis">
+  <div class="tabContent parent_div_1" id="analysis">
     <p>Prioritizing by Need</p>
     <button id="Prioritise_by_school" type="submit">Schools</button>
-    <table>
+    <button id="Prioritise_by_hospital" type="submit">Hospitals</button>
+    <button id="Prioritise_by_school_and_hospital" type="submit">School and Hospitals</button>
+    <div class="child_div_1">
+      <table>
         <div id="prioritise_result"></div>
-    </table>
+      </table>
+    </div>
+    <div class="child_div_1">
+      <div id="prioritise_result1"></div>
+    </div>
   </div>
-  <!--  <div class="bs-example">
-        <input type="text" name="typeahead" class="typeahead tt-query" autocomplete="off" spellcheck="false" placeholder="Type your Query">
-    </div> -->
+
+  <div class="tabContent" id="NearbyLocality">
+    <input list="nearbylist" type="text" name="nearbyarea">
+    <datalist id="nearbylist">
+        <option value="Admiralty"/>
+        <option value="Alexandra"/>
+        <option value="Aljunied"/>
+        <option value="Ang Mo Kio"/>
+        <option value="Ayer Rajah"/>
+        <option value="Balestier Road"/>
+        <option value="Bedok"/>
+        <option value="Bedok Reservoir"/>
+        <option value="Bendemeer"/>
+        <option value="Bishan"/>
+        <option value="Boon Keng"/>
+        <option value="Boon Lay"/>
+        <option value="Buangkok"/>
+        <option value="Bugis"/>
+        <option value="Bukit Batok"/>
+        <option value="Bukit Gombak"/>
+        <option value="Bukit Ho Swee"/>
+        <option value="Bukit Merah"/>
+        <option value="Bukit Panjang"/>
+        <option value="Bukit Timah"/>
+        <option value="Buona Vista"/>
+        <option value="Caldecott Hill"/>
+        <option value="Central Area"/>
+        <option value="Chai Chee"/>
+        <option value="Changi"/>
+        <option value="Changi Village"/>
+        <option value="Chinatown"/>
+        <option value="Choa Chu Kang"/>
+        <option value="Chong Pang"/>
+        <option value="Clementi"/>
+        <option value="Commonwealth"/>
+        <option value="Dhoby Ghaut"/>
+        <option value="Dover"/>
+        <option value="East Coast"/>
+        <option value="Eunos"/>
+        <option value="Farrer Park"/>
+        <option value="Geylang"/>
+        <option value="HarbourFront"/>
+        <option value="Hillview"/>
+        <option value="Holland Village"/>
+        <option value="Hougang"/>
+        <option value="Jalan Besar"/>
+        <option value="Jalan Kayu"/>
+        <option value="Joo Chiat"/>
+        <option value="Jurong"/>
+        <option value="Kaki Bukit"/>
+        <option value="Kallang"/>
+        <option value="Katong"/>
+        <option value="Kembangan"/>
+        <option value="Kent Ridge"/>
+        <option value="Kim Seng"/>
+        <option value="Kolam Ayer"/>
+        <option value="Kovan"/>
+        <option value="Little India"/>
+        <option value="Lorong Chuan"/>
+        <option value="Loyang"/>
+        <option value="MacPherson"/>
+        <option value="Marina Bay"/>
+        <option value="Marine Parade"/>
+        <option value="Marsiling"/>
+        <option value="Marymount"/>
+        <option value="Mountbatten"/>
+        <option value="Newton"/>
+        <option value="Novena"/>
+        <option value="Orchard Road"/>
+        <option value="Outram"/>
+        <option value="Pandan"/>
+        <option value="Pasir Panjang"/>
+        <option value="Pasir Ris"/>
+        <option value="Paya Lebar"/>
+        <option value="Pioneer"/>
+        <option value="Potong Pasir"/>
+        <option value="Punggol"/>
+        <option value="Queenstown"/>
+        <option value="Radin Mas"/>
+        <option value="Raffles Place"/>
+        <option value="Rochor"/>
+        <option value="Seletar"/>
+        <option value="Sembawang"/>
+        <option value="Sengkang"/>
+        <option value="Serangoon"/>
+        <option value="Serangoon Gardens"/>
+        <option value="Serangoon North"/>
+        <option value="Shenton Way"/>
+        <option value="Siglap"/>
+        <option value="Simei"/>
+        <option value="Sin Ming"/>
+        <option value="Singapore River"/>
+        <option value="St Michaels"/>
+        <option value="Taman Jurong"/>
+        <option value="Tampines"/>
+        <option value="Tanah Merah"/>
+        <option value="Tanglin"/>
+        <option value="Tanjong Pagar"/>
+        <option value="Tanjong Rhu"/>
+        <option value="Teban Gardens"/>
+        <option value="Telok Ayer"/>
+        <option value="Telok Blangah"/>
+        <option value="Thomson"/>
+        <option value="Yishun"/>
+    </datalist>
+
+    <br>
+    <button id="SubmitNearbyBtn" type="submit">Submit</button>
+    <div id="nearbytextbox"></div>
+
+  </div>
+
+
+  <div class="tabContent" id="locationethinicity">
+    <input list="ethnicitylist" type="text" name="ethinic_location">
+    <datalist id="ethnicitylist">
+      <option value="Ang Mo Kio"/>
+      <option value="Bedok"/>
+      <option value="Bukit Batok"/>
+      <option value="Bukit Merah"/>
+      <option value="Bukit Panjang"/>
+      <option value="Bishan"/>
+      <option value="Bukit Timah"/>
+      <option value="Changi"/>
+      <option value="Choa Chu Kang"/>
+      <option value="Clementi"/>
+      <option value="Downtown Core"/>
+      <option value="Geylang"/>
+      <option value="Hougang"/>
+      <option value="Jurong East"/>
+      <option value="Jurong West"/>
+      <option value="Kallang"/>
+      <option value="Marine Parade"/>
+      <option value="Newton"/>
+      <option value="Novena"/>
+      <option value="Outram"/>
+      <option value="Pasir Ris"/>
+      <option value="Queenstown"/>
+      <option value="Rochor"/>
+      <option value="River Valley"/>
+      <option value="Sembawang"/>
+      <option value="Sengkang"/>
+      <option value="Serangoon"/>
+      <option value="Tampines"/>
+      <option value="Tanglin"/>
+      <option value="Woodlands"/>
+      <option value="Yishun"/>
+    </datalist>
+
+    <br>
+    <button id="SubmitEthinicity" type="submit">Submit</button>
+    <div id="ethnicity_analysis"></div>
+
+  </div>
+
+
+  <div class="tabContent" id="rentforecast">
+    <input list="forecastlist" type="text" name="forecast_location">
+    <datalist id="forecastlist">
+      <option value="Ang Mo Kio"/>
+      <option value="Bedok"/>
+      <option value="Bishan"/>
+      <option value="Bukit Batok"/>
+      <option value="Bukit Merah"/>
+      <option value="Bukit Panjang"/>
+      <option value="Bukit Timah"/>
+      <option value="Central"/>
+      <option value="Choa Chu Kang"/>
+      <option value="Clementi"/>
+      <option value="Geylang"/>
+      <option value="Hougang"/>
+      <option value="Jurong East"/>
+      <option value="Jurong West"/>
+      <option value="Kallang/ Whampoa"/>
+      <option value="Marine Parade"/>
+      <option value="Pasir Ris"/>
+      <option value="Punggol"/>
+      <option value="Queenstown"/>
+      <option value="Sembawang"/>
+      <option value="Sengkang"/>
+      <option value="Serangoon"/>
+      <option value="Tampines"/>
+      <option value="Toa Payoh"/>
+      <option value="Woodlands"/>
+      <option value="Yishun"/>
+    </datalist>
+    <input list="roomlist" type="text" name="roomtype">
+
+    <datalist id="roomlist">
+      <option value="1 Room"/>
+      <option value="2 Room"/>
+      <option value="3 Room"/>
+      <option value="4 Room"/>
+      <option value="5 Room"/>
+      <option value="Executive"/>
+    </datalist>
+    <button id="SubmitRentForecast" type="submit">Submit</button>
+    <div id="rent_forecast"></div>
+  </div>
+
+
 </body>
 </html>

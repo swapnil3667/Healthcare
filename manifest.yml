@@ -4,5 +4,5 @@ applications:
   instances: 1
   domain: mybluemix.net
   name: healthcare_node
-  host: healthcareNode
+  host: rentalmarket
   disk_quota: 1024M
